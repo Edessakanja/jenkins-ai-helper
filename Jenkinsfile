@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building project...'
-                // example: sh './gradlew build'
+                // example build command: sh './gradlew build'
             }
         }
 
@@ -20,7 +20,7 @@ pipeline {
     post {
         always {
             script {
-                // Capture last 1000 lines from Jenkins console log
+                // Capture last 1000 lines from the Jenkins console log
                 def log = currentBuild.rawBuild.getLog(1000).join("\n")
 
                 // Create JSON payload for Flask webhook
@@ -29,7 +29,7 @@ pipeline {
                 // Send POST request to your Flask server
                 httpRequest(
                     httpMode: 'POST',
-                    url: 'http://host.docker.internal:5001/analyze',  // 👈 use this one
+                    url: 'http://127.0.0.1:5001/analyze',  // ✅ Local Jenkins uses 127.0.0.1
                     contentType: 'APPLICATION_JSON',
                     requestBody: groovy.json.JsonOutput.toJson(payload)
                 )
