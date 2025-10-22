@@ -29,7 +29,8 @@ post {
             // Send POST request to your Flask server
             httpRequest(
                 httpMode: 'POST',
-                url: 'http://127.0.0.1:5001/analyze',  // Flask webhook
+                url: 'url: 'http://host.docker.internal:5001/analyze',
+              ',  // Flask webhook
                 contentType: 'APPLICATION_JSON',
                 requestBody: groovy.json.JsonOutput.toJson(payload)
             )
