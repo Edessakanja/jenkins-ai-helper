@@ -17,18 +17,17 @@ pipeline {
     }
   }
 
-  post {
+ post {
     failure {
-      script {
-        def log = readFile('build.log')
-        def payload = [log: log]
-        httpRequest(
-          httpMode: 'POST',
-          url: 'http://127.0.0.1:5001/analyze',   // webhook you built
-          contentType: 'APPLICATION_JSON',
-          requestBody: groovy.json.JsonOutput.toJson(payload)
-        )
-      }
+        script {
+            def log = readFile('build.log')
+            def payload = [log: log]
+            httpRequest(
+                httpMode: 'POST',
+                url: 'http://127.0.0.1:5001/analyze',
+                contentType: 'APPLICATION_JSON',
+                requestBody: groovy.json.JsonOutput.toJson(payload)
+            )
+        }
     }
-  }
 }
