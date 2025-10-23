@@ -20,13 +20,16 @@ pipeline {
     post {
         always {
             script {
-                // Safe sandbox-friendly way to get Jenkins logs
-                def logContent = manager.build.logFile.text
+                // ✅ Get Jenkins log file path (sandbox-safe)
+                def logFile = currentBuild.rawBuild.getLogFile()
 
-                // Prepare payload
-                def payload = [log: logContent]
+                // Read the last 1000 lines safely
+                def logText = logFile.readLines().takeRight(1000).join('\n')
 
-                // Send logs to your local Flask webhook
+                // Prepare JSON payload
+                def payload = [log: logText]
+
+                // ✅ Send log to your Flask server
                 httpRequest(
                     httpMode: 'POST',
                     url: 'http://127.0.0.1:5001/analyze',
