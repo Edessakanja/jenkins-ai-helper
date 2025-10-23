@@ -32,7 +32,7 @@ pipeline {
                 // ✅ Send log to your Flask server
                 httpRequest(
                     httpMode: 'POST',
-                    url: 'http://127.0.0.1:5001/analyze',
+                    url: 'url: 'http://10.0.0.112:5001/analyze',
                     contentType: 'APPLICATION_JSON',
                     requestBody: groovy.json.JsonOutput.toJson(payload)
                 )
